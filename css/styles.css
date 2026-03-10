@@ -1,0 +1,409 @@
+﻿/* 
+  Defines global CSS variables for colors, gradients, and other theme-related values.
+  This allows for easy customization and consistency across the site.
+*/
+:root {
+  /* Dark background gradient with multiple radial layers for a complex, deep space effect. */
+  --bgDark:
+    radial-gradient(
+      1200px 700px at 25% 30%,
+      rgba(122, 92, 255, 0.1),
+      transparent 55%
+    ),
+    radial-gradient(
+      900px 600px at 35% 55%,
+      rgba(63, 169, 255, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 600px at 20% 70%,
+      rgba(255, 77, 109, 0.06),
+      transparent 60%
+    ),
+    #380743;
+
+  /* Light background gradient, similar to the dark one but with lower opacity for a subtler effect. */
+  --bgLight:
+    radial-gradient(
+      1200px 700px at 25% 30%,
+      rgba(122, 92, 255, 0.05),
+      transparent 55%
+    ),
+    radial-gradient(
+      900px 600px at 35% 55%,
+      rgba(63, 169, 255, 0.04),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 600px at 20% 70%,
+      rgba(255, 77, 109, 0.03),
+      transparent 60%
+    ),
+    #f6f4fb;
+
+  /* Opacity and other tuning variables for the SVG animation effects. */
+  --baseOpacity: 0.55;
+  --glowOpacity1: 0.2;
+  --glowOpacity2: 0.12;
+  --flowOpacityA: 0.85;
+  --flowOpacityB: 0.55;
+  --nodeOpacity: 0.95;
+
+  /* Standard color palette for UI elements like text, cards, and buttons. */
+  --blackText: #1e1b2c;
+  --mutedText: #6a6880;
+  --cardBG: #ffffff;
+  --btnColour: #2d1f55;
+  --btnColourHover: #43327c;
+}
+
+/* Universal box-sizing rule for more intuitive layout calculations. */
+* {
+  box-sizing: border-box;
+}
+
+/* Basic setup for the HTML and body elements, ensuring full height and setting default styles. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  color: var(--blackText);
+  background: var(--bgDark);
+}
+
+/* The main page container, using a two-column grid layout. */
+.page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* The left-hand pane, typically used for content or forms. */
+.left-pane {
+  position: relative;
+  overflow: hidden;
+  background: var(--bgLight);
+  display: grid;
+  place-items: center; /* Centers content within the pane. */
+}
+
+/* The right-hand pane, often used for decorative elements or secondary information. */
+.right-pane {
+  display: grid;
+  place-items: center;
+  padding: 48px 28px;
+  background: var(--bgDark);
+  position: relative;
+}
+
+/* A container for centering content within the panes. */
+.container {
+  width: min(50%, 100%);
+  display: grid;
+  gap: 28px;
+}
+
+/* Styling for the main title and subtitle. */
+.smart-title h2 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  letter-spacing: 0.2px;
+  align-items: center;
+  text-align: center;
+}
+
+.smart-title p {
+  margin: 0;
+  color: var(--mutedText);
+  line-height: 1.5;
+  font-size: small;
+  align-items: center;
+  text-align: center;
+}
+
+/* The container for the EACC logo. */
+.eacc-logo-container {
+  position: fixed;
+  display: flex;
+  top: 15%;
+  left: 55%;
+  opacity: 0.2;
+}
+
+/* The second EACC logo container, initially hidden. */
+.eacc-logo-container2 .eacc-logo2 {
+  display: none;
+}
+
+/* Styling for the EACC logo image itself. */
+.eacc-logo-container .eacc-logo {
+  width: 150px;
+  height: 120px;
+}
+
+/* The container for the person-with-chart image. */
+.person-with-chart-container {
+  position: fixed;
+  display: flex;
+  left: 52%;
+  bottom: 0%;
+  opacity: 0.3;
+}
+
+/* Styling for the person-with-chart image. */
+.person-with-chart-container .person-with-chart {
+  width: auto;
+  height: 700px;
+}
+
+/* Styles for the animated SVG background, making it cover its container. */
+.bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* --- Core styles for the animated SVG network --- */
+#network .baseLine {
+  fill: none;
+  stroke: url(#neonStroke); /* Uses a gradient for the stroke color. */
+  stroke-width: 1;
+  opacity: var(--baseOpacity);
+  vector-effect: non-scaling-stroke; /* Prevents stroke from scaling with the SVG. */
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* --- Styles for the glowing effects on the network lines --- */
+#network .glowLine.glowA {
+  fill: none;
+  stroke: url(#neonStroke);
+  stroke-width: 2.4;
+  opacity: var(--glowOpacity1);
+  filter: url(#glowSoft); /* Applies a soft blur filter. */
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+#network .glowLine.glowB {
+  fill: none;
+  stroke: url(#neonStroke);
+  stroke-width: 4.2;
+  opacity: var(--glowOpacity2);
+  filter: url(#glowWide); /* Applies a wider blur filter for a stronger glow. */
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* --- Styles for the animated energy flow pulses --- */
+#network .flowLine {
+  fill: none;
+  stroke: url(#flowStroke);
+  stroke-width: 2;
+  opacity: var(--flowOpacityA);
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+
+  /* Creates dashed lines that are animated to look like flowing energy. */
+  stroke-dasharray: var(--dash, 10) calc(var(--gap, 70) * 1px);
+  animation: dashMove var(--flowDur, 6s) linear infinite;
+  animation-delay: var(--flowDelay, 0s);
+  filter: url(#flowGlow);
+}
+
+/* A second, more subtle pulse layer for the energy flow. */
+#network .flowLine.flowB {
+  opacity: var(--flowOpacityB);
+  stroke-width: 1.4;
+  filter: url(#glowSoft);
+  animation-duration: var(--flowDur2, 9s);
+  animation-delay: var(--flowDelay2, -2s);
+  stroke-dasharray: var(--dash2, 6) calc(var(--gap2, 110) * 1px);
+}
+
+/* Animation keyframes for the moving dashes. */
+@keyframes dashMove {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+/* --- A subtle drifting animation for the network paths --- */
+#network .wire {
+  transform-origin: center;
+  animation: drift var(--driftDur, 26s) ease-in-out infinite;
+  animation-delay: var(--driftDelay, -8s);
+  will-change: transform;
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(var(--dx, 1px), var(--dy, -1px));
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+/* --- Animation for the flashing nodes in the network --- */
+#nodes .node {
+  fill: url(#nodeFill);
+  opacity: 0;
+  filter: url(#nodeGlow);
+  animation: nodeFlash var(--nodeDur, 3.8s) ease-in-out infinite;
+  animation-delay: var(--nodeDelay, 0s);
+  will-change: opacity, transform;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes nodeFlash {
+  0%,
+  78% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  82% {
+    opacity: var(--nodeOpacity);
+    transform: scale(1.15);
+  }
+  88% {
+    opacity: 0.25;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+
+/* Disables animations for users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  #network .wire,
+  #network .flowLine,
+  #nodes .node {
+    animation: none !important;
+  }
+}
+
+/*** STYLES FOR THE LOGIN CARD ***/
+.login-card {
+  width: min(380px, 100%);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  background: var(--cardBG);
+  text-align: center;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.subtitle {
+  margin-bottom: 30px;
+  color: var(--mutedText);
+}
+
+/* Styles for the input fields and their labels. */
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Adds a highlight effect when an input field is focused. */
+.input-group input:focus {
+  border-color: var(--btnColour);
+  box-shadow: 0 0 0 3px rgba(45, 31, 85, 0.12);
+}
+
+/* Styles for the login button. */
+button {
+  width: 100%;
+  padding: 12px;
+  background: var(--btnColour);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--btnColourHover);
+}
+
+/* --- RESPONSIVE DESIGN --- */
+
+/* On screens smaller than 1500px, hides the first EACC logo container. */
+@media (max-width: 1500px) {
+  .eacc-logo-container {
+    display: none;
+  }
+}
+
+/* On screens smaller than 1200px, hides the person-with-chart image and shows a larger, centered version of the second EACC logo. */
+@media (max-width: 1200px) {
+  .person-with-chart-container {
+    display: none;
+  }
+  .eacc-logo-container2 {
+    opacity: 0.2;
+  }
+
+  .eacc-logo-container2 .eacc-logo2 {
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    display: flex;
+    width: 300px;
+    height: auto;
+    transform: translateY(-50%);
+  }
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 900px) {
+  /*  Layout is now stacked vertically */
+  .page {
+    grid-template-columns: 1fr;
+  }
+
+  .left-pane {
+    min-height: 90vh;
+  }
+
+  .right-pane {
+    min-height: 10vh;
+  }
+
+  .eacc-logo-container2 .eacc-logo2 {
+    display: none;
+  }
+}
